@@ -1,37 +1,37 @@
-import React from "react";
-class TodoForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      newItem: ""
-    };
-  }
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-  handlesubmit = event => {
-    event.preventDefault();
-    this.props.addItem(this.state.newItem);
-    this.setState({
-      newItem: ""
-    });
-  };
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handlesubmit}>
-          <input
-            onChange={this.handleChange}
-            type="text"
-            placeholder="add to do"
-            name="newItem"
-            value={this.newItem}
-          />
-          <button type="submit">add todo</button>
-          <button onClick={this.props.clearCompleted}>Clear Completed</button>
-        </form>
-      </div>
-    );
-  }
+import React, { useState } from "react";
+
+//  const [state, dispatch] = useReducer(todoReducer, initialState);
+
+export default function TodoForm(p) {
+  console.log('in todo form...',p)
+  const [todo, setTodo] = useState("");
+  return (
+    <div className="input-bar">
+      <input
+        type="text"
+        value={todo}
+        placeholder="...todo"
+        onChange={e => setTodo(e.target.value)}
+      />
+      
+      <button
+        onClick={() => {
+         p.dispatch({
+            type: "ADD_TODO",
+            payload: { todo: todo}
+          });
+          setTodo("");
+        }}
+      >
+        Add
+      </button>
+      <button
+        className="clear-button"
+        onClick={() => p.dispatch({ type: "CLEAR_COMPLETED" })}
+      >
+        Clear completed
+      </button>
+    </div>
+  );
 }
-export default TodoForm;
+

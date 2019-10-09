@@ -1,17 +1,22 @@
 import React from "react";
 
 export default function Todo(props) {
-  console.log("inside todo com..", props);
   return (
     <div>
-      <p
-        onClick={() => props.toggleItem(props.item.id)}
+      <h2
         style={{
-          textDecoration: props.item.completed ? "line-through" : "none"
+          cursor: "pointer",
+          textDecoration: `${
+            props.todo.completed ? "red underline overline wavy" : "none"
+          }`,
+        opacity: `${props.todo.completed ? "0.2" : "1"}`
         }}
+        onClick={() =>
+          props.dispatch({ type: "TOGGLE_TODO", payload: props.todo.id })
+        }
       >
-        {props.item.task}
-      </p>
+        {props.todo.item}
+      </h2>
     </div>
   );
 }
